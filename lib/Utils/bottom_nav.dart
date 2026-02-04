@@ -16,7 +16,6 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
-  // List of views to display
   final List<Widget> _views = [
     const HomeView(),
     const StaticView(),
@@ -36,6 +35,7 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: const Color(AppColor.white),
       body: _views[_selectedIndex],
       bottomNavigationBar: Stack(
+        clipBehavior: Clip.none, // This allows content to overflow
         alignment: Alignment.topCenter,
         children: [
           // Background for bottom navigation
@@ -71,11 +71,11 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                   // Center space for FAB
                   const SizedBox(width: 60),
-                  // Add Expenses (can be used for calendar or other)
+                  // Add Expenses
                   _buildNavItem(
                     index: 2,
-                    icon: Icons.add_circle_outline,
-                    label: 'Add',
+                    icon: Icons.calendar_today_outlined,
+                    label: 'Calendar',
                   ),
                   // Profile
                   _buildNavItem(
@@ -89,13 +89,16 @@ class _MainScreenState extends State<MainScreen> {
           ),
           // Floating Action Button in center
           Positioned(
-          
+            top: -30, // Floats above the nav bar
             child: GestureDetector(
               onTap: () {
-                // Add action here - you can navigate to add expenses or any other action
-                setState(() {
-                   // Navigate to Add Expenses view
-                });
+                // Your custom action here - navigate to add expense screen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AddExpensesView(),
+                  ),
+                );
               },
               child: Container(
                 width: 65,
@@ -105,18 +108,16 @@ class _MainScreenState extends State<MainScreen> {
                   color: const Color(AppColor.primaryColor),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(AppColor.primaryColor).withOpacity(0.4),
+                      color: const Color(
+                        AppColor.primaryColor,
+                      ).withOpacity(0.4),
                       blurRadius: 20,
                       spreadRadius: 2,
                       offset: const Offset(0, 8),
                     ),
                   ],
                 ),
-                child: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  size: 32,
-                ),
+                child: const Icon(Icons.add, color: Colors.white, size: 32),
               ),
             ),
           ),
