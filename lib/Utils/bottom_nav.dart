@@ -93,12 +93,7 @@ class _MainScreenState extends State<MainScreen> {
             child: GestureDetector(
               onTap: () {
                 // Your custom action here - navigate to add expense screen
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AddExpensesView(),
-                  ),
-                );
+              
               },
               child: Container(
                 width: 65,
