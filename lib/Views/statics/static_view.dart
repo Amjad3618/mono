@@ -99,10 +99,7 @@ class _StaticViewState extends State<StaticView> {
                         ),
                       ),
                       // Chart curve
-                      CustomPaint(
-                        painter: ChartPainter(),
-                        size: Size.infinite,
-                      ),
+                      CustomPaint(painter: ChartPainter(), size: Size.infinite),
                       // Data point bubble
                       Positioned(
                         left: 70,
@@ -168,39 +165,36 @@ class _StaticViewState extends State<StaticView> {
                         color: Color(0xFF1A1A1A),
                       ),
                     ),
-                    Icon(
-                      Icons.filter_list,
-                      color: Colors.grey[600],
-                      size: 20,
-                    ),
+                    Icon(Icons.filter_list, color: Colors.grey[600], size: 20),
                   ],
                 ),
                 const SizedBox(height: 16),
 
                 // Spending Items
-                _buildSpendingItem(
-                  icon: '☕',
-                  title: 'Starbucks',
-                  date: 'Jan 12, 2022',
-                  amount: '- \$150.00',
-                  backgroundColor: const Color(0xFF1FB584).withOpacity(0.1),
+                _buildTransactionItem(
+                  logo: 'assets/images/upwork.png',
+                  title: 'Upwork',
+                  subtitle: 'Today',
+                  amount: 500.00,
+                  isIncome: true,
                 ),
-                const SizedBox(height: 12),
 
-                _buildSpendingItemDark(
-                  icon: '👤',
-                  title: 'Transfer',
-                  date: 'Yesterday',
-                  amount: '- \$85.00',
+                // Transaction Item 2
+                _buildTransactionItem(
+                  logo: 'assets/images/youtube.png',
+                  title: 'YouTube',
+                  subtitle: 'Yesterday',
+                  amount: 12.00,
+                  isIncome: false,
                 ),
-                const SizedBox(height: 12),
 
-                _buildSpendingItem(
-                  icon: '🎥',
-                  title: 'Youtube',
-                  date: 'Jan 16, 2022',
-                  amount: '- \$11.99',
-                  backgroundColor: Colors.red.withOpacity(0.1),
+                // Transaction Item 3
+                _buildTransactionItem(
+                  logo: 'assets/images/paypal.png',
+                  title: 'PayPal Transfer',
+                  subtitle: '2 days ago',
+                  amount: 1200.00,
+                  isIncome: true,
                 ),
               ],
             ),
@@ -246,6 +240,7 @@ class _StaticViewState extends State<StaticView> {
     );
   }
 
+  // ignore: unused_element
   Widget _buildSpendingItem({
     required String icon,
     required String title,
@@ -258,10 +253,7 @@ class _StaticViewState extends State<StaticView> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(
-          color: Colors.grey[200]!,
-          width: 1,
-        ),
+        border: Border.all(color: Colors.grey[200]!, width: 1),
       ),
       child: Row(
         children: [
@@ -273,10 +265,7 @@ class _StaticViewState extends State<StaticView> {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Center(
-              child: Text(
-                icon,
-                style: const TextStyle(fontSize: 22),
-              ),
+              child: Text(icon, style: const TextStyle(fontSize: 22)),
             ),
           ),
           const SizedBox(width: 12),
@@ -310,72 +299,6 @@ class _StaticViewState extends State<StaticView> {
               fontSize: 13,
               fontWeight: FontWeight.w600,
               color: Color(0xFFE74C3C),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSpendingItemDark({
-    required String icon,
-    required String title,
-    required String date,
-    required String amount,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2D9B9E),
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Center(
-              child: Text(
-                icon,
-                style: const TextStyle(fontSize: 22),
-              ),
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  date,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white.withOpacity(0.7),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Text(
-            amount,
-            style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
             ),
           ),
         ],
@@ -435,11 +358,7 @@ class ChartPainter extends CustomPainter {
     canvas.drawPath(path, paint);
 
     // Draw data point
-    canvas.drawCircle(
-      Offset(size.width * 0.25, size.height * 0.35),
-      5,
-      paint,
-    );
+    canvas.drawCircle(Offset(size.width * 0.25, size.height * 0.35), 5, paint);
 
     // Draw dashed line
     const dashWidth = 4.0;
@@ -462,4 +381,89 @@ class ChartPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(ChartPainter oldDelegate) => false;
+}
+
+Widget _buildTransactionItem({
+  required String logo,
+  required String title,
+  required String subtitle,
+  required double amount,
+  required bool isIncome,
+}) {
+  return Container(
+    margin: const EdgeInsets.only(bottom: 12),
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(16),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.05),
+          blurRadius: 8,
+          offset: const Offset(0, 2),
+        ),
+      ],
+    ),
+    child: Row(
+      children: [
+        // Logo
+        Container(
+          width: 48,
+          height: 48,
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Image.asset(
+            logo,
+            fit: BoxFit.contain,
+            errorBuilder: (context, error, stackTrace) {
+              return Center(
+                child: Icon(Icons.business, color: Colors.grey[400], size: 24),
+              );
+            },
+          ),
+        ),
+        const SizedBox(width: 16),
+
+        // Title and Subtitle
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.black87,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                subtitle,
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // Amount
+        Text(
+          '${isIncome ? '+' : '-'}\$${amount.toStringAsFixed(2)}',
+          style: TextStyle(
+            color: isIncome ? const Color(0xFF00B140) : const Color(0xFFFF6B6B),
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ],
+    ),
+  );
 }

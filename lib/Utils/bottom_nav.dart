@@ -3,8 +3,9 @@ import 'package:mono/Views/profile/profile_view.dart';
 import 'package:mono/Views/statics/static_view.dart';
 
 import '../../Utils/app_color.dart';
-import '../Views/add_expenses_view.dart/add_expenses_view.dart';
+import '../Views/add_expenses_view.dart/connect_wallet.dart';
 import '../Views/homeview/home_view.dart';
+import '../widgets/expenses_dailogbox.dart'; // Import the new dialog
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -19,7 +20,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _views = [
     const HomeView(),
     const StaticView(),
-    const AddExpensesView(),
+    const ConnectWallet(),
     const ProfileView(),
   ];
 
@@ -27,6 +28,15 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  void _showAddExpenseDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const AddExpenseDialog();
+      },
+    );
   }
 
   @override
@@ -91,10 +101,7 @@ class _MainScreenState extends State<MainScreen> {
           Positioned(
             top: -30, // Floats above the nav bar
             child: GestureDetector(
-              onTap: () {
-                // Your custom action here - navigate to add expense screen
-              
-              },
+              onTap: _showAddExpenseDialog,
               child: Container(
                 width: 65,
                 height: 65,
